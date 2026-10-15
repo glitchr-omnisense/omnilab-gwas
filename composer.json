@@ -1,0 +1,46 @@
+{
+    "name": "omnilab/gwas",
+    "type": "library",
+    "description": "Omnilab GWAS Catalog: a study by its accession (GCST000854), a variant by its rs id, a trait by its EFO, Mondo or HPO id - reported and mapped traits, samples, ancestries, platforms, functional class, location, mapped genes, studies - each with its strongest associations and the studies, variants and traits they tie it to as related things, a search of traits, and the associations paged with their p-values, effect sizes and risk alleles, through the NHGRI-EBI GWAS Catalog's REST API v2, no key needed.",
+    "keywords": [
+        "science",
+        "biology",
+        "gwas",
+        "gwas catalog",
+        "genetic associations",
+        "snp",
+        "efo",
+        "omnilab"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marco Meyer",
+            "email": "marco.meyer@glitchr.io"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "glitchr/omnilab": "^1.0@dev",
+        "symfony/http-client": "^6.4|^7.0|^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnilab\\Gwas\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omnilab\\Gwas\\Tests\\": "Tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
