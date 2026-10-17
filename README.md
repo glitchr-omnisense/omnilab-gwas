@@ -1,6 +1,6 @@
 # omnilab/gwas
 
-The NHGRI-EBI GWAS Catalog for [glitchr/omnilab](https://github.com/glitchr-studio/omnilab), through
+The NHGRI-EBI GWAS Catalog for [omniscient/omnilab](https://github.com/glitchr-studio/omnilab), through
 its REST API v2: a study by its accession (`GCST000854`) with its reported trait, its traits in EFO,
 Mondo or HPO, its samples and ancestries, platforms, number of variants, publication and summary
 statistics; a variant by its rs id (`rs334`) with its functional class, alleles, location and mapped
