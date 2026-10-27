@@ -1,5 +1,11 @@
 # omnilab/gwas
 
+The NHGRI-EBI GWAS Catalog's REST API v2 (`https://www.ebi.ac.uk/gwas/rest/api/v2/`) for
+[omnisense/omnilab](https://github.com/glitchr-omnisense/omnilab): studies (`GCST000854`), variants
+(`rs334`) and traits (EFO, Mondo, HPO, Orphanet) with their strongest associations - p-values,
+effect sizes, risk alleles - as entities, the studies, variants and traits they tie as related
+things; a search of traits; outside the contract, the associations paged. No key.
+
 ## Installation
 
 ```sh
@@ -14,6 +20,48 @@ $gwas = (new GwasSourceFactory($httpClient))->create([
     'associations' => 10,              // optional: associations (or a trait's studies) an entity holds; 0: one call
 ]);
 ```
+
+## Credentials
+
+None: the GWAS Catalog's REST API v2 takes no key and no account.
+
+## Options
+
+The factory's options, with the defaults it applies (`GwasSourceFactory`):
+
+| Option | Type | Default | Required | Effect |
+|---|---|---|---|---|
+| `associations` | `int` | `10` | no | how many associations (for a trait, how many studies) an entity holds, the strongest first; 0: none, one call an entity |
+| `mailto` | `?string` | null | no | a contact address, sent in the User-Agent |
+| `user_agent` | `?string` | null | no | the whole User-Agent, in place of the one made from `mailto` |
+| `throttle` | `float` | `0` | no | seconds left between two calls: the catalogue publishes no rate |
+| `base_uri` | `string` | `https://www.ebi.ac.uk/gwas/rest/api/v2/` | no | the API the source calls |
+
+## Capabilities
+
+`capabilities()` answers `entity`, `search`; an operation it does not answer throws `NotSupportedException` before any call.
+
+| Capability | Supported | |
+|---|---|---|
+| `entity` | yes | a study (`GCST000854`), a variant (`rs334`) or a trait (`EFO_...`, `MONDO:...`, `HP:...`, `ORPHA:...`); another base refused before any call; two calls with `associations` above 0 |
+| `search` | yes | the catalogue's traits by name (`efo-traits?trait=`), 100 a page at most; a study or a variant is not searched by text |
+| `series` | no |  |
+| `products` | no |  |
+| `occurrences` | no |  |
+| `datasets` | no |  |
+| `jobs` | no |  |
+| `open` | no |  |
+| `structure` | no |  |
+| `cross_references` | no | none of the same thing: the studies, variants and traits an entity is tied to are its `related` (`trait`, `variant`, `study`, `associated_trait`) |
+| `forecast` | no |  |
+| `historical` | no |  |
+| `area` | no |  |
+| `station` | no |  |
+| `cloud_cover` | no |  |
+
+Outside the contract, on `Omnilab\Gwas\GwasSource`: `associations(Identifier|string $id, int
+$limit = 25, ?string $cursor = null): Page` - a study's, a variant's or a trait's associations, the
+smallest p-value first, as `Omnilab\Gwas\Association` objects ([below](#outside-the-contract-associations)).
 
 ## The schemes
 
@@ -93,6 +141,66 @@ The loci and genomic contexts of an association (`associations/{id}/loci`), a st
 in detail, the summary statistics themselves (files), publications as entities, genes as the
 catalogue maps them (`genes/{symbol}`), and the background traits' own studies.
 
+## Example
+
+```php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Omnilab\Gwas\GwasSourceFactory;
+use Omnilab\Source\Query;
+use Symfony\Component\HttpClient\HttpClient;
+
+$gwas = (new GwasSourceFactory(HttpClient::create()))->create(['mailto' => 'you@example.org', 'associations' => 3]);
+
+$variant = $gwas->entity('rs334');
+echo $variant->label, ': ', $variant->value('most_severe_consequence'), ', ', $variant->value('genomic_location'), ', ', $variant->value('associations'), " associations; the strongest:\n";
+foreach ($variant->properties('association') as $association) {
+    echo '  ', $association, "\n";
+}
+
+$page = $gwas->associations('rs334', 2);
+foreach ($page as $a) {
+    printf("  %s in %s: p = %s, %s\n", implode(',', $a->riskAlleles), $a->study, $a->pValueText, $a->oddsRatio ?? $a->beta ?? '-');
+}
+
+foreach ($gwas->search(new Query('sickle', limit: 5)) as $trait) {
+    echo 'trait ', $trait->id->display(), ' ', $trait->label, "\n";
+}
+```
+
+```
+rs334: missense variant, 11:5227002, 134 associations; the strongest:
+  rs334-T (HBB): p = 1e-323, Hereditary hemolytic anemias (PheCode 282)
+  rs334-T (HBB): p = 9e-131, hematocrit (maximum, inv-norm transformed)
+  rs334-T (HBB): p = 3e-118, hematocrit (maximum, inv-norm transformed)
+  rs334-T in gwas:GCST90475778: p = 1e-323, 2.241 unit decrease
+  rs334-T in gwas:GCST90475337: p = 9e-131, 0.2578 unit increase
+trait EFO:0700066 sickle cell disease and related diseases
+trait MONDO:0011382 sickle cell disease
+```
+
+(as answered on 2026-10-27: four calls)
+
+```yaml
+# config/packages/omnilab.yaml
+omnilab:
+    sources:
+        gwas: { factory: gwas, options: { mailto: '%env(OMNILAB_MAILTO)%', associations: 10 } }
+```
+
+`associations()` is a method of `GwasSource`, not of the interface the bundle injects: check the
+instance before calling it.
+
+## Errors
+
+Every call goes through `HttpSource`: a 404 or a 410 (and a 204) is null - an empty page for a list -; a 429 is a `RateLimitedException` (`retryAfter` from `Retry-After`); a 5xx, a time-out or a host that does not answer an `UnavailableException`; any other 4xx a `ProviderException` with its `status` and what the service said; an answer that is not JSON a `ProviderException`, a web page answered for JSON an `UnavailableException`.
+
+Before any call: an identifier of another base given to `entity()` or `associations()`
+(`NotSupportedException`). An unknown study, variant or trait is the catalogue's 404, null; the
+retired v1 API answers 410 (null too, were `base_uri` pointed at it).
+
 ## Verified, and not
 
 Against the real service on 2026-10-15: the study GCST000854 (four associations, two traits),
@@ -101,5 +209,19 @@ studies), an rs id the catalogue does not hold (404), the search for "sickle" (t
 associations in pages of five, the Collector's walk above. The fixtures in `Tests/Fixtures/` are its
 answers. Each call took 1 to 2.7 s.
 
+Again on 2026-10-27: rs334 and its three strongest associations, two pages of its associations,
+the search for "sickle" (two traits; the example above).
+
 Not verified: an Orphanet id as a trait (the catalogue's traits met were EFO, Mondo and HPO terms);
 a rate limit (none published, none met).
+
+## Responsibility
+
+This package is an independent, unofficial client: it is not affiliated with, endorsed by or
+sponsored by the NHGRI, the EMBL-EBI or the GWAS Catalog. The catalogue's answers name the
+[EMBL-EBI's terms of use](https://www.ebi.ac.uk/about/terms-of-use/) as their licence, and it asks
+to be cited (Cerezo M. et al., Nucleic Acids Res. 2025, 10.1093/nar/gkae1070), as the README's
+[Terms of use](https://github.com/glitchr-omnisense/omnilab-gwas#terms-of-use) says. Whoever runs
+the package is responsible for complying with them and for any use made of what it returns: see
+the README's [Responsibility](https://github.com/glitchr-omnisense/omnilab-gwas#responsibility)
+section.
