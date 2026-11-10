@@ -1,0 +1,247 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 2
+			path: Association.php
+
+		-
+			message: '#^Parameter \#2 \$value of static method Omnilab\\Model\\Identifier\:\:tryOf\(\) expects int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: Association.php
+
+		-
+			message: '#^ArrayObject\<\*NEVER\*, \*NEVER\*\> does not accept Omnilab\\Model\\Property\.$#'
+			identifier: offsetAssign.valueType
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''\:'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Cannot access offset ''name'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Cannot access offset ''totalElements'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Cannot access offset ''totalPages'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 2
+			path: GwasSource.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 4
+			path: GwasSource.php
+
+		-
+			message: '#^Method Omnilab\\Gwas\\GwasSource\:\:associations\(\) should return Omnilab\\Source\\Page\<Omnilab\\Gwas\\Association\> but returns Omnilab\\Source\\Page\<Omnilab\\Model\\Entity\|Omnilab\\Model\\Product\>\.$#'
+			identifier: return.type
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Method Omnilab\\Gwas\\GwasSource\:\:rows\(\) should return array\{list\<array\<string, mixed\>\>, int\|null, int\} but returns array\{list\<array\<mixed, mixed\>\>, int\|null, int\}\.$#'
+			identifier: return.type
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Parameter \#1 \$items of class Omnilab\\Source\\Page constructor expects list\<T of Omnilab\\Model\\Entity\|Omnilab\\Model\\Product\>, list\<Omnilab\\Gwas\\Association\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Parameter \#1 \$s of method Omnilab\\Gwas\\GwasSource\:\:study\(\) expects array\<string, mixed\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Parameter \#1 \$t of method Omnilab\\Gwas\\GwasSource\:\:traitEntity\(\) expects array\<string, mixed\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Parameter \#1 \$text of static method Omnilab\\Source\\HttpSource\:\:text\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: GwasSource.php
+
+		-
+			message: '#^Parameter \#1 \$v of method Omnilab\\Gwas\\GwasSource\:\:snp\(\) expects array\<string, mixed\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Parameter \#2 \$value of static method Omnilab\\Model\\Identifier\:\:tryOf\(\) expects int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: GwasSource.php
+
+		-
+			message: '#^Parameter \#3 \$value of class Omnilab\\Model\\Property constructor expects bool\|float\|int\|Omnilab\\Model\\Quantity\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Type Omnilab\\Gwas\\Association in generic type Omnilab\\Source\\Page\<Omnilab\\Gwas\\Association\> in PHPDoc tag @return is not subtype of template type T of Omnilab\\Model\\Entity\|Omnilab\\Model\\Product of class Omnilab\\Source\\Page\.$#'
+			identifier: generics.notSubtype
+			count: 1
+			path: GwasSource.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 1
+			path: GwasSourceFactory.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: GwasSourceFactory.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: GwasSourceFactory.php
+
+		-
+			message: '#^Cannot access property \$domain on Omnilab\\Model\\Entity\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot access property \$genes on Omnilab\\Gwas\\Association\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot access property \$id on Omnilab\\Model\\Entity\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot access property \$kind on Omnilab\\Model\\Entity\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot access property \$label on Omnilab\\Model\\Entity\|null\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot access property \$label on Omnilab\\Model\\Property\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot access property \$pValueText on Omnilab\\Gwas\\Association\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot access property \$riskAlleles on Omnilab\\Gwas\\Association\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot access property \$study on Omnilab\\Gwas\\Association\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot access property \$url on Omnilab\\Model\\Entity\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot access property \$variants on Omnilab\\Gwas\\Association\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot call method properties\(\) on Omnilab\\Model\\Entity\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot call method property\(\) on Omnilab\\Model\\Entity\|null\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot call method related\(\) on Omnilab\\Model\\Entity\|null\.$#'
+			identifier: method.nonObject
+			count: 5
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Cannot call method value\(\) on Omnilab\\Model\\Entity\|null\.$#'
+			identifier: method.nonObject
+			count: 16
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Method Omnilab\\Gwas\\Tests\\GwasSourceTest\:\:source\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: Tests/GwasSourceTest.php
+
+		-
+			message: '#^Parameter \#1 \$options of method Omnilab\\Source\\SourceFactory\:\:create\(\) expects array\<string, mixed\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Tests/GwasSourceTest.php

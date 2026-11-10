@@ -1,0 +1,55 @@
+{
+    "$schema": "https://github.com/glitchr-omnisense/contracts/blob/1.x/resources/usage-policy.schema.json",
+    "provider": "gwas",
+    "rateLimits": [
+        {
+            "max": 15,
+            "window": "second",
+            "scope": "client-ip",
+            "operations": [],
+            "note": "\"15 requests per second per IP address\"; beyond it, HTTP 429."
+        },
+        {
+            "max": 100,
+            "window": "minute",
+            "scope": "client-ip",
+            "operations": [],
+            "note": "\"up to 100 requests per minute ... per IP address\"; beyond it, HTTP 429."
+        }
+    ],
+    "concurrency": null,
+    "rights": {
+        "commercial": "allowed",
+        "openSourceRequired": null,
+        "caching": {
+            "permission": "allowed",
+            "maxTtl": null
+        },
+        "storage": "allowed",
+        "redistribution": "allowed",
+        "attribution": {
+            "required": true,
+            "text": "NHGRI-EBI GWAS Catalog",
+            "url": "https://www.ebi.ac.uk/gwas/",
+            "where": [
+                "source"
+            ]
+        },
+        "licence": "EMBL-EBI Terms of Use (summary statistics CC0-1.0 unless otherwise stated)"
+    },
+    "requirements": {
+        "key": false,
+        "userAgent": {
+            "required": false,
+            "pattern": null
+        }
+    },
+    "provenance": {
+        "terms": "https://www.ebi.ac.uk/about/terms-of-use/",
+        "policy": "https://www.ebi.ac.uk/gwas/docs/programmatic-access/rest-api",
+        "verifiedAt": "2026-11-10",
+        "declaredBy": "maintainer",
+        "contact": "gwas-info@ebi.ac.uk",
+        "notes": "REST API page read 2026-11-10: 100 requests a minute and 15 a second per IP address, HTTP 429 above either; a client sending many requests (crawling) should set a descriptive User-Agent such as \"MyResearchProject/1.0 (contact: name@example.org)\" (asked, not required for every client); bulk access through the flat-file downloads. About page: the Catalog and its contents fall under the general EMBL-EBI Terms of Use; summary statistics CC0 unless stated; logos and diagrams CC BY 4.0. EMBL-EBI terms: no additional restriction on use or redistribution beyond the data owners' rights; attribution expected (\"expects attribution ... in publications, services or products\"); access only through the provided interfaces; use that threatens the service can be blocked. Commercial use not addressed explicitly; allowed read from \"no additional restrictions\". Citation suggested in this package's README (Cerezo M. et al., NAR 2025, doi:10.1093/nar/gkae1070) not re-read on the citation page."
+    }
+}

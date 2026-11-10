@@ -40,7 +40,19 @@ A study is named in the core's `gwas` scheme, a variant in `dbsnp`, a trait in `
 The catalogue's answers name the [EMBL-EBI's terms of use](https://www.ebi.ac.uk/about/terms-of-use/)
 as their licence. Cite Cerezo M. et al., "The NHGRI-EBI GWAS Catalog: standards for reusability,
 sustainability and diversity", Nucleic Acids Res. 2025,
-[10.1093/nar/gkae1070](https://doi.org/10.1093/nar/gkae1070). No rate is published.
+[10.1093/nar/gkae1070](https://doi.org/10.1093/nar/gkae1070). Its REST API page now publishes 100 requests a minute and 15 a second per address (read on
+2026-11-10, `policy.json`).
+
+## Usage policy
+
+Declared as data in [`policy.json`](policy.json) (read at https://www.ebi.ac.uk/gwas/docs/programmatic-access/rest-api on 2026-11-10), and honoured on every request by the
+core: a limit reached waits when its window ends within `max_wait` seconds, else the request is not
+sent ([Usage policies](https://github.com/glitchr-omnisense/omnilab/blob/1.x/docs/policies.md)).
+
+- Limits: 15 a second per client-ip; 100 a minute per client-ip.
+- Licence: EMBL-EBI Terms of Use (summary statistics CC0-1.0 unless otherwise stated); commercial use: allowed.
+- Credit: required: NHGRI-EBI GWAS Catalog (https://www.ebi.ac.uk/gwas/).
+- Needs: nothing.
 
 ## Responsibility
 
