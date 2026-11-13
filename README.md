@@ -35,6 +35,34 @@ A study is named in the core's `gwas` scheme, a variant in `dbsnp`, a trait in `
 `hp`. The `Collector` reaches the catalogue from ClinVar by a variation's rs id
 (`$collector->collect('clinvar', '15333')`).
 
+## Install and a first call
+
+```sh
+composer require omnilab/gwas
+```
+
+A real call, with no account and no key: a study of the GWAS Catalog. `mailto` is your address, sent
+in the User-Agent so that the service can reach you before it blocks a caller; the source keeps to
+the limits its [`policy.json`](policy.json) declares.
+
+```php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Omnilab\Gwas\GwasSourceFactory;
+
+$gwas = (new GwasSourceFactory())->create(['mailto' => 'you@example.org']);   // your address, in the User-Agent
+$study = $gwas->entity('GCST000854');
+echo $study->id, ': ', $study->label, "\n";
+```
+
+Its output on 2026-11-13:
+
+```
+gwas:GCST000854: Suicide risk
+```
+
 ## Terms of use
 
 The catalogue's answers name the [EMBL-EBI's terms of use](https://www.ebi.ac.uk/about/terms-of-use/)
